@@ -1,0 +1,29 @@
+# Flutter
+signai_app/.dart_tool/
+signai_app/.packages
+signai_app/build/
+signai_app/.flutter-plugins
+signai_app/.flutter-plugins-dependencies
+signai_app/.idea/
+signai_app/.metadata
+signai_app/android/.gradle/
+signai_app/android/app/build/
+signai_app/android/build/
+signai_app/ios/Pods/
+signai_app/ios/.symlinks/
+signai_app/ios/Flutter/Flutter.framework
+signai_app/ios/Flutter/Flutter.podspec
+signai_app/macos/Pods/
+signai_app/macos/Flutter/ephemeral/
+signai_app/web/
+signai_app/linux/
+signai_app/windows/
+
+# Node.js
+signaling_server/node_modules/
+signaling_server/uploads/
+
+# General
+.DS_Store
+*.log
+.env
