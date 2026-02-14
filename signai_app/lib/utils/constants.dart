@@ -7,7 +7,7 @@ class AppConstants {
 
   // Signaling Server URL'i
   // Geliştirme: localhost:3001, Prodüksiyon: Railway/Render URL'i  
-  static const String signalingServerUrl = 'http://10.55.1.15:3001';
+  static const String signalingServerUrl = 'http://10.55.1.77:3001';
   // Emulator için: static const String signalingServerUrl = 'http://localhost:3001';
   // static const String signalingServerUrl = 'https://signai-server.railway.app';
 
