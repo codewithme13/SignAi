@@ -13,11 +13,8 @@ signai_app/ios/Pods/
 signai_app/ios/.symlinks/
 signai_app/ios/Flutter/Flutter.framework
 signai_app/ios/Flutter/Flutter.podspec
-signai_app/macos/Pods/
-signai_app/macos/Flutter/ephemeral/
-signai_app/web/
-signai_app/linux/
-signai_app/windows/
+*.iml
+signai_app/pubspec.lock
 
 # Node.js
 signaling_server/node_modules/
