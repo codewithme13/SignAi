@@ -2,282 +2,283 @@
 
 # 🤟 SignAI
 
-### AI-Powered Bidirectional Sign Language Video Calling Platform
+### Yapay Zeka Destekli Çift Yönlü İşaret Dili Görüntülü Arama Platformu
 
-*Breaking communication barriers between deaf and hearing individuals through real-time AI-powered bidirectional translation*
+*İşitme engelli ve işiten bireyler arasındaki iletişim engellerini gerçek zamanlı yapay zeka çevirisi ile ortadan kaldırıyoruz*
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.2.0+-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Node.js](https://img.shields.io/badge/Node.js-18.0+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
 [![WebRTC](https://img.shields.io/badge/WebRTC-P2P-333333?style=for-the-badge&logo=webrtc&logoColor=white)](https://webrtc.org)
 [![Render](https://img.shields.io/badge/Deploy-Render.com-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://render.com)
-[![Lottie](https://img.shields.io/badge/Animations-Lottie-00DDB3?style=for-the-badge&logo=airbnb&logoColor=white)](https://lottiefiles.com)
+[![Lottie](https://img.shields.io/badge/Animasyonlar-Lottie-00DDB3?style=for-the-badge&logo=airbnb&logoColor=white)](https://lottiefiles.com)
 
-[Features](#-features) • [Demo](#-demo) • [Architecture](#-architecture) • [Deployment](#-deployment) • [Installation](#-installation) • [API](#-api-reference)
+[Özellikler](#-özellikler) • [Demo](#-demo) • [Mimari](#-sistem-mimarisi) • [Kurulum](#-kurulum) • [API](#-api-referansı)
 
 ---
 
-**🌐 Live Server:** `https://signai-5g3q.onrender.com`
+**🌐 Canlı Sunucu:** `https://signai-5g3q.onrender.com`
 
-**📱 APK Sizes:** arm64-v8a (54MB) | armeabi-v7a (43MB) | x86_64 (58MB)
+**📱 APK Boyutları:** arm64-v8a (54MB) | armeabi-v7a (43MB) | x86_64 (58MB)
 
 </div>
 
 ---
 
-## 📖 Table of Contents
+## 📖 İçindekiler
 
-- [Overview](#-overview)
-- [Features](#-features)
+- [Genel Bakış](#-genel-bakış)
+- [Özellikler](#-özellikler)
 - [Demo](#-demo)
-- [How It Works](#-how-it-works)
-- [System Architecture](#-architecture)
-- [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [Usage](#-usage)
-- [API Reference](#-api-reference)
-- [Security](#-security)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
+- [Nasıl Çalışır?](#-nasıl-çalışır)
+- [Sistem Mimarisi](#-sistem-mimarisi)
+- [Teknoloji Yığını](#-teknoloji-yığını)
+- [Proje Yapısı](#-proje-yapısı)
+- [Dağıtım (Deployment)](#-dağıtım-deployment)
+- [Kurulum](#-kurulum)
+- [Yapılandırma](#-yapılandırma)
+- [Kullanım](#-kullanım)
+- [API Referansı](#-api-referansı)
+- [Güvenlik](#-güvenlik)
+- [Katkıda Bulunma](#-katkıda-bulunma)
+- [Lisans](#-lisans)
+- [İletişim](#-iletişim)
 
 ---
 
-## 🌟 Overview
+## 🌟 Genel Bakış
 
-**SignAI** is an innovative AI-powered video calling application that enables **true bidirectional communication** between deaf and hearing individuals. Unlike existing solutions, SignAI provides:
+**SignAI**, işitme engelli ve işiten bireyler arasında **gerçek çift yönlü iletişimi** mümkün kılan yenilikçi bir yapay zeka destekli görüntülü arama uygulamasıdır. Mevcut çözümlerden farklı olarak SignAI şunları sağlar:
 
-- **Sign Language → Text:** Real-time AI-powered gesture detection converts sign language to readable subtitles
-- **Speech → Sign Language Animation:** Spoken words are converted to beautiful Lottie sign language animations
+- **İşaret Dili → Metin:** Gerçek zamanlı yapay zeka destekli jest algılama, işaret dilini okunabilir altyazılara dönüştürür
+- **Konuşma → İşaret Dili Animasyonu:** Söylenen kelimeler profesyonel Lottie işaret dili animasyonlarına dönüştürülür
 
-This creates a complete communication loop where both parties can express themselves naturally in their preferred language.
+Bu, her iki tarafın da tercih ettiği dilde doğal bir şekilde kendini ifade edebildiği eksiksiz bir iletişim döngüsü oluşturur.
 
-### The Problem
+### Problem
 
-Over 466 million people worldwide are deaf or hard of hearing. Traditional video calling platforms lack real-time translation capabilities, forcing deaf individuals to rely on interpreters or resort to text-only communication. This creates significant communication barriers in daily life, professional settings, and emergency situations.
+Dünya genelinde 466 milyondan fazla insan işitme engelli veya işitme güçlüğü çekmektedir. Geleneksel görüntülü arama platformları gerçek zamanlı çeviri yeteneklerinden yoksundur ve işitme engelli bireyleri tercümanlara güvenmeye veya yalnızca metin tabanlı iletişime başvurmaya zorlamaktadır. Bu durum günlük hayatta, profesyonel ortamlarda ve acil durumlarda önemli iletişim engelleri oluşturmaktadır.
 
-### The Solution
+### Çözüm
 
-SignAI implements a **dual AI pipeline**:
+SignAI **çift yapay zeka hattı** uygular:
 
-1. **Visual AI (Sign → Text):** Uses Google ML Kit's advanced pose detection to recognize Turkish Sign Language (TİD) gestures in real-time, converting them to text subtitles visible to the hearing user.
+1. **Görsel Yapay Zeka (İşaret → Metin):** Google ML Kit'in gelişmiş poz algılama özelliğini kullanarak Türk İşaret Dili (TİD) jestlerini gerçek zamanlı olarak tanır ve işiten kullanıcının görebileceği metin altyazılarına dönüştürür.
 
-2. **Audio AI with Animation (Speech → Sign):** Utilizes speech recognition to convert spoken words into animated Lottie sign language gestures, displayed to the deaf user as smooth, professional animations.
-
-<!-- BURAYA: Sistem akış diyagramı veya kullanım senaryosu görseli -->
+2. **Sesli Yapay Zeka + Animasyon (Konuşma → İşaret):** Konuşma tanıma teknolojisini kullanarak söylenen kelimeleri animasyonlu Lottie işaret dili jestlerine dönüştürür ve işitme engelli kullanıcıya akıcı, profesyonel animasyonlar olarak görüntüler.
 
 ---
 
-## ✨ Features
+## ✨ Özellikler
 
-### 🎥 **P2P Encrypted Video Calling**
-- End-to-end encrypted video/audio using WebRTC DTLS-SRTP
-- True peer-to-peer connection - video/audio NEVER passes through server
-- Adaptive video quality with HD support (640×480 @ 24fps)
-- STUN/TURN server support for NAT traversal behind firewalls
-- Automatic ICE candidate gathering for optimal connection path
+### 🎥 **P2P Şifreli Görüntülü Arama**
+- WebRTC DTLS-SRTP ile uçtan uca şifrelenmiş video/ses
+- Gerçek peer-to-peer bağlantı - video/ses ASLA sunucudan geçmez
+- HD desteği ile uyarlanabilir video kalitesi (640×480 @ 24fps)
+- Güvenlik duvarları arkasındaki NAT geçişi için STUN/TURN sunucu desteği
+- Optimal bağlantı yolu için otomatik ICE aday toplama
 
-### 🤖 **AI-Powered Sign Language Detection (Sign → Text)**
-- Real-time recognition of Turkish Sign Language gestures
-- Google ML Kit Pose Detection with 33-point skeletal tracking
-- Advanced gesture validation with consistency buffer (5/10 frames minimum)
-- Smart cooldown mechanism (2 seconds) to prevent duplicate detection
-- Sentence building mode for natural communication flow
-- Confidence scoring for accurate gesture matching
+### 🤖 **Yapay Zeka Destekli İşaret Dili Algılama (İşaret → Metin)**
+- Türk İşaret Dili jestlerinin gerçek zamanlı tanınması
+- 33 noktalı iskelet takibi ile Google ML Kit Poz Algılama
+- Tutarlılık tamponu ile gelişmiş jest doğrulama (minimum 5/10 kare)
+- Mükerrer algılamayı önlemek için akıllı bekleme mekanizması (2 saniye)
+- Doğal iletişim akışı için cümle oluşturma modu
+- Doğru jest eşleştirmesi için güven puanlaması
 
-**Detection Pipeline:**
+**Algılama Hattı:**
 ```
-Camera Frame → ML Kit Pose → Landmark Analysis → Gesture Classification → Subtitle Generation
-     ↓              ↓               ↓                    ↓                      ↓
-  200ms/frame   33 keypoints   Angle/Position     Pattern Match          WebSocket Send
-```
-
-**Recognized Gestures Include:**
-| Turkish | English | Detection Method |
-|---------|---------|------------------|
-| Merhaba | Hello | Right hand raised above head |
-| Teşekkürler | Thank you | Hand moves from chin downward |
-| Evet / Hayır | Yes / No | Head nod / Index finger swaying |
-| Yardım | Help | Both arms raised above head |
-| ...and more | | Full gesture library included |
-
-### 🎬 **Speech-to-Sign Animation System (Speech → Sign)**
-- **Lottie-powered** professional sign language animations
-- Real-time keyword detection in speech stream
-- Smooth, accessible animations for deaf users
-- Overlay display on remote video feed
-- Automatic animation sequencing for multiple detected words
-
-**How It Works:**
-```
-Speech Input → STT Engine → Keyword Extraction → Animation Lookup → Lottie Display
-     ↓              ↓              ↓                   ↓                ↓
- Microphone    Turkish NLP    Word Match         Asset Load      Overlay Render
+Kamera Karesi → ML Kit Poz → Landmark Analizi → Jest Sınıflandırma → Altyazı Oluşturma
+      ↓              ↓              ↓                   ↓                    ↓
+  200ms/kare    33 anahtar      Açı/Pozisyon      Desen Eşleştirme    WebSocket Gönder
+                 nokta
 ```
 
-**Example Animation Triggers:**
-- User says "Merhaba, nasılsın?" → [merhaba.json] then [nasilsin.json] animations play
-- User says "Su istiyorum, teşekkürler" → [su.json] then [tesekkurler.json] play
-- Animations include greetings, common phrases, questions, and essential vocabulary
+**Tanınan Jestler:**
+| Jest | Algılama Yöntemi |
+|------|------------------|
+| Merhaba | Sağ el baş üstünde kaldırılmış |
+| Teşekkürler | El çeneden aşağı doğru hareket |
+| Evet | Yumruk baş hizasında, aşağı hareket |
+| Hayır | İşaret parmağı sağa-sola sallanma |
+| Yardım | Her iki kol baş üstünde kaldırılmış |
+| Yemek | Sağ el ağız hizasında |
+| Su | C şeklinde el çene hizasında |
+| Dur | Açık avuç göğüs hizasında |
+| Hoşçakal | Yüz hizasında el sallama |
+| Ben | İşaret parmağı göğüse işaret ediyor |
+| Nasılsın | Eller göğüste, dışa doğru hareket |
+| Seni Seviyorum | Klasik ASL "I Love You" işareti |
 
-### 🎤 **Speech-to-Text Conversion**
-- Real-time Turkish speech recognition via platform APIs
-- Automatic session restart mechanism (30-second continuous windows)
-- Partial and final transcription results for responsive feedback
-- Low-latency subtitle display (<500ms end-to-end)
-- Noise-tolerant recognition for real-world environments
+### 🎬 **Konuşmadan İşaret Diline Animasyon Sistemi (Konuşma → İşaret)**
+- **Lottie destekli** profesyonel işaret dili animasyonları
+- Konuşma akışında gerçek zamanlı anahtar kelime algılama
+- İşitme engelli kullanıcılar için akıcı, erişilebilir animasyonlar
+- Uzak video akışı üzerinde overlay görüntüleme
+- Birden fazla algılanan kelime için otomatik animasyon sıralama
 
-### 💬 **Dual Subtitle System**
-- 🤟 **Purple subtitles** for sign language (AI detected gestures)
-- 🎤 **Cyan subtitles** for speech (STT converted)
-- Bidirectional subtitle streaming via WebSocket
-- 3-second display duration with smooth fade effects
-- Non-overlapping subtitle positioning
+**Nasıl Çalışır:**
+```
+Konuşma Girişi → STT Motoru → Anahtar Kelime Çıkarma → Animasyon Arama → Lottie Görüntüleme
+      ↓              ↓                ↓                     ↓                  ↓
+   Mikrofon     Türkçe NLP      Kelime Eşleştirme      Asset Yükleme     Overlay Render
+```
 
-### 👤 **User Management**
-- JWT-based authentication with 7-day token expiry
-- Profile photo upload/delete with image optimization
-- Real-time online status indicator
-- Call history tracking with duration and status
-- Secure password hashing with bcrypt (12 rounds)
+**Örnek Animasyon Tetikleyicileri:**
+- Kullanıcı "Merhaba, nasılsın?" dediğinde → [merhaba.json] sonra [nasilsin.json] animasyonları oynar
+- Kullanıcı "Su istiyorum, teşekkürler" dediğinde → [su.json] sonra [tesekkurler.json] oynar
+- Animasyonlar selamlaşma, yaygın ifadeler, sorular ve temel kelime dağarcığını içerir
+
+### 🎤 **Konuşmadan Metne Dönüştürme**
+- Platform API'leri aracılığıyla gerçek zamanlı Türkçe konuşma tanıma
+- Otomatik oturum yeniden başlatma mekanizması (30 saniyelik sürekli pencereler)
+- Duyarlı geri bildirim için kısmi ve nihai transkripsiyon sonuçları
+- Düşük gecikmeli altyazı görüntüleme (<500ms uçtan uca)
+- Gerçek dünya ortamları için gürültüye dayanıklı tanıma
+
+### 💬 **Çift Altyazı Sistemi**
+- 🤟 **Mor altyazılar** işaret dili için (AI algılanan jestler)
+- 🎤 **Cyan altyazılar** konuşma için (STT dönüştürülmüş)
+- WebSocket üzerinden çift yönlü altyazı akışı
+- Yumuşak solma efektleri ile 3 saniyelik görüntüleme süresi
+- Çakışmayan altyazı konumlandırma
+
+### 👤 **Kullanıcı Yönetimi**
+- 7 günlük token süresi ile JWT tabanlı kimlik doğrulama
+- Görüntü optimizasyonu ile profil fotoğrafı yükleme/silme
+- Gerçek zamanlı çevrimiçi durum göstergesi
+- Süre ve durum ile arama geçmişi takibi
+- bcrypt ile güvenli şifre hashleme (12 tur)
 
 ### 🎨 **Modern UI/UX**
-- Dark/Light theme support with system preference detection
-- Smooth Lottie animations throughout the app
-- Responsive design for various screen sizes
-- Picture-in-picture video layout with draggable local preview
-- Gradient backgrounds and glassmorphism effects
-- Intuitive call controls with visual feedback
+- Sistem tercihi algılama ile Koyu/Açık tema desteği
+- Uygulama genelinde akıcı Lottie animasyonları
+- Çeşitli ekran boyutları için duyarlı tasarım
+- Sürüklenebilir yerel önizleme ile resim içinde resim video düzeni
+- Gradyan arka planlar ve glassmorphism efektleri
+- Görsel geri bildirim ile sezgisel arama kontrolleri
 
-### ☁️ **Cloud Deployment Ready**
-- **Render.com** deployment with automatic SSL
-- Hybrid database mode (PostgreSQL or In-Memory)
-- Zero-configuration deployment with Procfile
-- Environment-based configuration
-- Always-on server (no cold starts for paid plans)
-
----
-
-## 🎬 Demo
-
-<!-- BURAYA: Demo videosu veya GIF animasyonu ekle -->
-<!-- Örnek kullanım senaryosu: -->
-<!-- 1. Kullanıcı A "Merhaba" işareti yapıyor → Kullanıcı B ekranında "Merhaba" altyazısı görünüyor -->
-<!-- 2. Kullanıcı B "Selam" diyor → Kullanıcı A ekranında "Selam" altyazısı görünüyor -->
+### ☁️ **Bulut Dağıtıma Hazır**
+- Otomatik SSL ile **Render.com** dağıtımı
+- Hibrit veritabanı modu (PostgreSQL veya Bellek İçi)
+- Procfile ile sıfır yapılandırma dağıtımı
+- Ortam tabanlı yapılandırma
+- Her zaman açık sunucu (ücretli planlar için soğuk başlatma yok)
 
 ---
 
-## 🔄 How It Works
+## 🔄 Nasıl Çalışır?
 
 ```
 ┌────────────────────┐                                    ┌────────────────────┐
-│   DEAF USER (A)    │                                    │  HEARING USER (B)  │
+│  İŞİTME ENGELLİ    │                                    │   İŞİTEN           │
+│   KULLANICI (A)    │                                    │   KULLANICI (B)    │
 │                    │                                    │                    │
-│  🤟 Signs gesture  │                                    │  🎤 Says "Merhaba" │
+│  🤟 Jest yapar     │                                    │  🎤 "Merhaba" der  │
 │         ↓          │                                    │         ↓          │
-│  ML Kit detects    │                                    │  STT converts      │
+│  ML Kit algılar    │                                    │  STT dönüştürür    │
 │         ↓          │                                    │         ↓          │
-│  "Merhaba" text    │═══════ P2P ENCRYPTED ══════════════│  Keyword detected  │
-│                    │        VIDEO STREAM                │         ↓          │
-│  ┌──────────────┐  │                                    │  🎬 Lottie plays   │
-│  │ Sees Lottie  │◄═╪════════════════════════════════════╪══ merhaba.json    │
-│  │ animation    │  │        SUBTITLE STREAM             │                    │
+│  "Merhaba" metni   │═══════ P2P ŞİFRELİ ════════════════│  Anahtar kelime    │
+│                    │        VİDEO AKIŞI                 │  algılandı         │
+│  ┌──────────────┐  │                                    │         ↓          │
+│  │ Lottie       │◄═╪════════════════════════════════════╪══ 🎬 Lottie oynar │
+│  │ animasyonu   │  │        ALTYAZI AKIŞI               │  merhaba.json     │
+│  │ görür        │  │                                    │                    │
 │  └──────────────┘  │                                    │  ┌──────────────┐  │
-│                    │                                    │  │ Sees purple  │  │
+│                    │                                    │  │ Mor          │  │
 │                    ╪════════════════════════════════════╪═►│ "Merhaba"    │  │
-│                    │                                    │  │ subtitle     │  │
+│                    │                                    │  │ altyazı görür│  │
 └────────────────────┘                                    └──└──────────────┘──┘
                               ▲
                               │
                     ┌─────────┴─────────┐
-                    │ SIGNALING SERVER  │
-                    │ (Render.com)      │
+                    │  SİNYALLEŞME      │
+                    │  SUNUCUSU         │
+                    │  (Render.com)     │
                     │                   │
-                    │ • SDP/ICE relay   │
-                    │ • User registry   │
-                    │ • Subtitle relay  │
-                    │ • Auth/JWT        │
+                    │ • SDP/ICE iletimi │
+                    │ • Kullanıcı kaydı │
+                    │ • Altyazı iletimi │
+                    │ • Kimlik doğrulama│
                     │                   │
-                    │ Video/Audio does  │
-                    │ NOT pass through  │
+                    │ Video/Ses sunucu- │
+                    │ dan GEÇMEZ        │
                     └───────────────────┘
 ```
 
-### Complete Call Flow Sequence
+### Tam Arama Akış Sırası
 
 ```
-1. AUTHENTICATION
-   └─► User A & B login → Receive JWT tokens → Connect to signaling server
+1. KİMLİK DOĞRULAMA
+   └─► Kullanıcı A & B giriş yapar → JWT token alır → Sinyalleşme sunucusuna bağlanır
 
-2. CALL INITIATION
-   ├─► User A taps "Call User B"
-   ├─► WebRTC creates SDP Offer (video/audio capabilities)
-   ├─► Signaling server forwards offer to User B
-   └─► User B sees incoming call dialog with caller info
+2. ARAMA BAŞLATMA
+   ├─► Kullanıcı A "Kullanıcı B'yi Ara" butonuna basar
+   ├─► WebRTC SDP Teklifi oluşturur (video/ses yetenekleri)
+   ├─► Sinyalleşme sunucusu teklifi Kullanıcı B'ye iletir
+   └─► Kullanıcı B arayan bilgileriyle gelen arama diyaloğunu görür
 
-3. CALL ACCEPTANCE
-   ├─► User B accepts → WebRTC creates SDP Answer
-   ├─► Signaling server forwards answer to User A
-   └─► Both peers exchange ICE candidates for NAT traversal
+3. ARAMA KABUL
+   ├─► Kullanıcı B kabul eder → WebRTC SDP Yanıtı oluşturur
+   ├─► Sinyalleşme sunucusu yanıtı Kullanıcı A'ya iletir
+   └─► Her iki eş NAT geçişi için ICE adaylarını değiştirir
 
-4. P2P CONNECTION ESTABLISHED
-   ├─► DTLS-SRTP handshake encrypts all media
-   ├─► Direct peer-to-peer video/audio streaming begins
-   └─► AI pipelines activate on both devices
+4. P2P BAĞLANTI KURULDU
+   ├─► DTLS-SRTP el sıkışması tüm medyayı şifreler
+   ├─► Doğrudan peer-to-peer video/ses akışı başlar
+   └─► Her iki cihazda AI hatları aktifleşir
 
-5. BIDIRECTIONAL AI PROCESSING
+5. ÇİFT YÖNLÜ AI İŞLEME
    │
-   ├─► DEAF USER SIDE:
-   │   ├─► Every 200ms: Capture camera frame
-   │   ├─► ML Kit Pose Detection extracts 33 landmarks
-   │   ├─► Gesture classifier analyzes hand/body positions
-   │   ├─► On match: Send "sign_subtitle" via WebSocket
-   │   └─► Receive "speech_animation" → Play Lottie animation
+   ├─► İŞİTME ENGELLİ KULLANICI TARAFI:
+   │   ├─► Her 200ms'de: Kamera karesi yakala
+   │   ├─► ML Kit Poz Algılama 33 landmark çıkarır
+   │   ├─► Jest sınıflandırıcı el/vücut pozisyonlarını analiz eder
+   │   ├─► Eşleşme durumunda: WebSocket üzerinden "sign_subtitle" gönder
+   │   └─► "speech_animation" al → Lottie animasyonu oynat
    │
-   └─► HEARING USER SIDE:
-       ├─► Continuous speech recognition active
-       ├─► STT engine processes microphone input
-       ├─► Keyword matcher scans for animation-supported words
-       ├─► Send animation trigger + text subtitle
-       └─► Receive "sign_subtitle" → Display purple text
+   └─► İŞİTEN KULLANICI TARAFI:
+       ├─► Sürekli konuşma tanıma aktif
+       ├─► STT motoru mikrofon girişini işler
+       ├─► Anahtar kelime eşleştirici animasyon destekli kelimeleri tarar
+       ├─► Animasyon tetikleyici + metin altyazı gönder
+       └─► "sign_subtitle" al → Mor metin görüntüle
 
-6. CALL TERMINATION
-   ├─► Either user taps end call
-   ├─► WebRTC connection closed
-   ├─► AI pipelines stopped
-   └─► Call record saved to database
+6. ARAMA SONLANDIRMA
+   ├─► Her iki kullanıcıdan biri aramayı sonlandır butonuna basar
+   ├─► WebRTC bağlantısı kapatılır
+   ├─► AI hatları durdurulur
+   └─► Arama kaydı veritabanına kaydedilir
 ```
 
 ---
 
-## 🏗 Architecture
+## 🏗 Sistem Mimarisi
 
-### System Overview
+### Sistem Genel Bakışı
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                 PRESENTATION LAYER                   │
-│  Screens (6)  │  Widgets (4)  │  Theme/Constants    │
+│                 SUNUM KATMANI                        │
+│  Ekranlar (6)  │  Widget'lar (5) │  Tema/Sabitler   │
 ├─────────────────────────────────────────────────────┤
-│                 STATE MANAGEMENT                     │
+│                 DURUM YÖNETİMİ                       │
 │  AuthProvider  │  CallProvider  │  ThemeProvider    │
 ├─────────────────────────────────────────────────────┤
-│                 SERVICE LAYER                        │
-│  WebRTC │ Signaling │ SignLanguage │ STT │ Perms   │
+│                 SERVİS KATMANI                       │
+│  WebRTC │ Sinyalleşme │ İşaretDili │ STT │ İzinler │
 ├─────────────────────────────────────────────────────┤
-│                 NETWORK LAYER                        │
-│  Socket.IO (WS) │ HTTP/REST │ WebRTC (P2P)         │
+│                 AĞ KATMANI                           │
+│  Socket.IO (WS) │ HTTP/REST │ WebRTC (P2P)          │
 ├─────────────────────────────────────────────────────┤
 │                 BACKEND                              │
-│  Express │ Socket.IO │ PostgreSQL │ JWT/bcrypt     │
+│  Express │ Socket.IO │ PostgreSQL/Bellek │ JWT     │
 └─────────────────────────────────────────────────────┘
 ```
 
-### Database Schema
+### Veritabanı Şeması
 
 ```sql
--- Users Table
+-- Kullanıcılar Tablosu
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -287,7 +288,7 @@ CREATE TABLE users (
     is_online BOOLEAN DEFAULT false
 );
 
--- Call History Table
+-- Arama Geçmişi Tablosu
 CREATE TABLE call_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     caller_id UUID REFERENCES users(id),
@@ -300,275 +301,273 @@ CREATE TABLE call_history (
 );
 ```
 
-<!-- BURAYA: Architecture diagram veya component interaction görseli -->
-
 ---
 
-## 🛠 Technology Stack
+## 🛠 Teknoloji Yığını
 
-### Mobile Application (Flutter)
+### Mobil Uygulama (Flutter)
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Flutter** | 3.2.0+ | Cross-platform mobile framework |
-| **flutter_webrtc** | 0.12.4 | P2P video/audio calling with SRTP encryption |
-| **google_mlkit_pose_detection** | 0.12.0 | 33-point skeletal tracking for gesture detection |
-| **speech_to_text** | 7.0.0 | Native speech-to-text with Turkish support |
-| **lottie** | 3.1.0 | High-performance vector animations for sign language |
-| **socket_io_client** | 2.0.3+1 | Real-time WebSocket signaling |
-| **provider** | 6.1.1 | Efficient state management |
-| **shared_preferences** | 2.2.2 | Local persistent storage for settings |
+| Teknoloji | Sürüm | Kullanım Amacı |
+|-----------|-------|----------------|
+| **Flutter** | 3.2.0+ | Çapraz platform mobil framework |
+| **flutter_webrtc** | 0.12.4 | SRTP şifrelemeli P2P video/ses arama |
+| **google_mlkit_pose_detection** | 0.12.0 | Jest algılama için 33 noktalı iskelet takibi |
+| **speech_to_text** | 7.0.0 | Türkçe destekli yerel konuşmadan metne |
+| **lottie** | 3.1.0 | İşaret dili için yüksek performanslı vektör animasyonları |
+| **socket_io_client** | 2.0.3+1 | Gerçek zamanlı WebSocket sinyalleşme |
+| **provider** | 6.1.1 | Verimli durum yönetimi |
+| **shared_preferences** | 2.2.2 | Ayarlar için yerel kalıcı depolama |
 
 ### Backend (Node.js)
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Express** | 4.18.2 | HTTP server & REST API |
-| **Socket.IO** | 4.7.4 | Bidirectional WebSocket communication |
-| **PostgreSQL** | 14+ | Relational database (optional, has in-memory fallback) |
-| **jsonwebtoken** | 9.0.2 | Stateless JWT authentication |
-| **bcrypt** | 6.0.0 | Secure password hashing (12 rounds) |
-| **helmet** | 7.1.0 | Security headers (XSS, clickjacking protection) |
-| **express-rate-limit** | 7.1.5 | DDoS and brute-force protection |
-| **uuid** | 10.0.0 | Unique identifier generation |
+| Teknoloji | Sürüm | Kullanım Amacı |
+|-----------|-------|----------------|
+| **Express** | 4.18.2 | HTTP sunucu & REST API |
+| **Socket.IO** | 4.7.4 | Çift yönlü WebSocket iletişimi |
+| **PostgreSQL** | 14+ | İlişkisel veritabanı (isteğe bağlı, bellek içi yedek var) |
+| **jsonwebtoken** | 9.0.2 | Durumsuz JWT kimlik doğrulama |
+| **bcrypt** | 6.0.0 | Güvenli şifre hashleme (12 tur) |
+| **helmet** | 7.1.0 | Güvenlik başlıkları (XSS, clickjacking koruması) |
+| **express-rate-limit** | 7.1.5 | DDoS ve kaba kuvvet koruması |
+| **uuid** | 10.0.0 | Benzersiz tanımlayıcı oluşturma |
 
-### Infrastructure & Deployment
+### Altyapı & Dağıtım
 
-| Component | Technology | Details |
-|-----------|------------|---------|
-| **Hosting** | Render.com | Auto-scaling, SSL, always-on |
-| **Database** | PostgreSQL / In-Memory | Hybrid mode for flexibility |
-| **WebRTC** | DTLS-SRTP, ICE, SDP | Industry-standard P2P protocols |
-| **STUN** | Google (`stun.l.google.com:19302`) | NAT discovery |
-| **TURN** | OpenRelay (`openrelay.metered.ca`) | Relay fallback |
-| **Target** | Android (min SDK 21) | 98% device coverage |
+| Bileşen | Teknoloji | Detaylar |
+|---------|-----------|----------|
+| **Barındırma** | Render.com | Otomatik ölçekleme, SSL, her zaman açık |
+| **Veritabanı** | PostgreSQL / Bellek İçi | Esneklik için hibrit mod |
+| **WebRTC** | DTLS-SRTP, ICE, SDP | Endüstri standardı P2P protokolleri |
+| **STUN** | Google (`stun.l.google.com:19302`) | NAT keşfi |
+| **TURN** | OpenRelay (`openrelay.metered.ca`) | Relay yedek |
+| **Hedef** | Android (min SDK 21) | %98 cihaz kapsama |
 
 ---
 
-## 📁 Project Structure
+## 📁 Proje Yapısı
 
 ```
 signai/
-├── signai_app/                      # Flutter Mobile Application
+├── signai_app/                      # Flutter Mobil Uygulama
 │   ├── lib/
-│   │   ├── main.dart                # App entry point with providers
-│   │   ├── screens/                 # 6 UI screens
-│   │   │   ├── splash_screen.dart   # Animated splash with logo
-│   │   │   ├── login_screen.dart    # Auth with validation
-│   │   │   ├── home_screen.dart     # User list + call initiation
-│   │   │   ├── call_screen.dart     # Video call with AI overlays
-│   │   │   ├── profile_screen.dart  # User settings
+│   │   ├── main.dart                # Provider'larla uygulama giriş noktası
+│   │   ├── screens/                 # 6 UI ekranı
+│   │   │   ├── splash_screen.dart   # Logo ile animasyonlu açılış
+│   │   │   ├── login_screen.dart    # Doğrulamalı kimlik
+│   │   │   ├── home_screen.dart     # Kullanıcı listesi + arama başlatma
+│   │   │   ├── call_screen.dart     # AI overlay'lerle görüntülü arama
+│   │   │   ├── profile_screen.dart  # Kullanıcı ayarları
 │   │   │   └── privacy_security_screen.dart
-│   │   ├── providers/               # State management
-│   │   │   ├── auth_provider.dart   # JWT token + user state
-│   │   │   ├── call_provider.dart   # WebRTC + call state
-│   │   │   └── theme_provider.dart  # Dark/light mode
-│   │   ├── services/                # Business logic layer
-│   │   │   ├── webrtc_service.dart  # P2P connection management
-│   │   │   ├── signaling_service.dart # Socket.IO communication
-│   │   │   ├── sign_language_service.dart # ML Kit gesture detection
-│   │   │   ├── speech_to_text_service.dart # Native STT wrapper
-│   │   │   └── permission_service.dart # Runtime permissions
-│   │   ├── widgets/                 # Reusable UI components
-│   │   │   ├── call_controls.dart   # Mic/camera/end buttons
-│   │   │   ├── call_timer.dart      # HH:MM:SS display
-│   │   │   ├── incoming_call_dialog.dart # Accept/reject UI
-│   │   │   ├── subtitle_overlay.dart # Dual subtitle display
-│   │   │   └── sign_animation_overlay.dart # Lottie animation player
+│   │   ├── providers/               # Durum yönetimi
+│   │   │   ├── auth_provider.dart   # JWT token + kullanıcı durumu
+│   │   │   ├── call_provider.dart   # WebRTC + arama durumu
+│   │   │   └── theme_provider.dart  # Koyu/açık mod
+│   │   ├── services/                # İş mantığı katmanı
+│   │   │   ├── webrtc_service.dart  # P2P bağlantı yönetimi
+│   │   │   ├── signaling_service.dart # Socket.IO iletişimi
+│   │   │   ├── sign_language_service.dart # ML Kit jest algılama
+│   │   │   ├── speech_to_text_service.dart # Yerel STT sarmalayıcı
+│   │   │   └── permission_service.dart # Çalışma zamanı izinleri
+│   │   ├── widgets/                 # Yeniden kullanılabilir UI bileşenleri
+│   │   │   ├── call_controls.dart   # Mikrofon/kamera/sonlandır butonları
+│   │   │   ├── call_timer.dart      # SS:DD:SS görüntüleme
+│   │   │   ├── incoming_call_dialog.dart # Kabul/reddet UI
+│   │   │   ├── subtitle_overlay.dart # Çift altyazı görüntüleme
+│   │   │   └── sign_animation_overlay.dart # Lottie animasyon oynatıcı
 │   │   └── utils/
-│   │       ├── constants.dart       # Server URL, timeouts
-│   │       └── theme.dart           # Colors, typography
+│   │       ├── constants.dart       # Sunucu URL, zaman aşımları
+│   │       └── theme.dart           # Renkler, tipografi
 │   ├── assets/
-│   │   ├── animations/              # Lottie JSON files
-│   │   │   ├── merhaba.json         # "Hello" animation
-│   │   │   ├── tesekkurler.json     # "Thank you" animation
-│   │   │   ├── nasilsin.json        # "How are you?" animation
-│   │   │   └── ... (more gestures)  # Extensive gesture library
-│   │   ├── images/                  # App icons, backgrounds
+│   │   ├── animations/              # Lottie JSON dosyaları
+│   │   │   ├── merhaba.json         # "Merhaba" animasyonu
+│   │   │   ├── tesekkurler.json     # "Teşekkürler" animasyonu
+│   │   │   ├── nasilsin.json        # "Nasılsın?" animasyonu
+│   │   │   └── ... (daha fazla)     # Kapsamlı jest kütüphanesi
+│   │   ├── images/                  # Uygulama ikonları, arka planlar
 │   │   ├── labels/
-│   │   │   └── sign_labels.txt      # Gesture label definitions
-│   │   └── models/                  # ML model files (if custom)
-│   ├── android/                     # Android native configuration
-│   ├── ios/                         # iOS native configuration
-│   └── pubspec.yaml                 # Dependencies & assets
+│   │   │   └── sign_labels.txt      # Jest etiket tanımları
+│   │   └── models/                  # ML model dosyaları (özel ise)
+│   ├── android/                     # Android yerel yapılandırma
+│   ├── ios/                         # iOS yerel yapılandırma
+│   └── pubspec.yaml                 # Bağımlılıklar & asset'ler
 │
-├── signaling_server/                # Node.js Signaling Server
-│   ├── server.js                    # Express + Socket.IO main
-│   ├── auth.js                      # JWT + bcrypt authentication
-│   ├── db.js                        # Hybrid PostgreSQL/In-Memory
-│   ├── validation.js                # Input sanitization
-│   ├── package.json                 # Dependencies
-│   ├── Procfile                     # Render.com deployment
-│   ├── render.yaml                  # Render configuration
-│   └── .env.example                 # Environment template
+├── signaling_server/                # Node.js Sinyalleşme Sunucusu
+│   ├── server.js                    # Express + Socket.IO ana dosya
+│   ├── auth.js                      # JWT + bcrypt kimlik doğrulama
+│   ├── db.js                        # Hibrit PostgreSQL/Bellek İçi
+│   ├── validation.js                # Girdi sanitizasyonu
+│   ├── package.json                 # Bağımlılıklar
+│   ├── Procfile                     # Render.com dağıtımı
+│   ├── render.yaml                  # Render yapılandırması
+│   └── .env.example                 # Ortam şablonu
 │
-├── README.md                        # This documentation
-└── LICENSE                          # MIT License
+├── README.md                        # Bu dokümantasyon
+└── LICENSE                          # MIT Lisansı
 ```
 
-**Code Statistics:**
-- Flutter App: ~4,500+ lines of Dart
-- Backend: ~1,400+ lines of JavaScript
-- Lottie Animations: Professional-grade JSON assets
-- **Total:** ~6,000+ lines of production code
+**Kod İstatistikleri:**
+- Flutter Uygulaması: ~4,500+ satır Dart
+- Backend: ~1,400+ satır JavaScript
+- Lottie Animasyonları: Profesyonel kalitede JSON asset'leri
+- **Toplam:** ~6,000+ satır üretim kodu
 
 ---
 
-## 🚀 Deployment
+## 🚀 Dağıtım (Deployment)
 
-### Production Server (Render.com)
+### Üretim Sunucusu (Render.com)
 
-SignAI's signaling server is deployed on **Render.com** for 24/7 availability:
+SignAI'nin sinyalleşme sunucusu 7/24 erişilebilirlik için **Render.com**'da dağıtılmıştır:
 
-- **Live URL:** `https://signai-5g3q.onrender.com`
-- **Region:** Frankfurt (EU)
-- **SSL:** Automatic (Let's Encrypt)
-- **Database:** In-Memory mode (no PostgreSQL required)
+- **Canlı URL:** `https://signai-5g3q.onrender.com`
+- **Bölge:** Frankfurt (AB)
+- **SSL:** Otomatik (Let's Encrypt)
+- **Veritabanı:** Bellek İçi mod (PostgreSQL gerekmez)
 
-#### Deploying Your Own Instance
+#### Kendi Örneğinizi Dağıtma
 
-1. **Fork the repository** on GitHub
+1. **Repository'yi fork'layın** GitHub'da
 
-2. **Create a Render account** at [render.com](https://render.com)
+2. **Render hesabı oluşturun** [render.com](https://render.com) adresinde
 
-3. **New Web Service** → Connect your GitHub repo
+3. **Yeni Web Servisi** → GitHub repo'nuzu bağlayın
 
-4. **Configure settings:**
+4. **Ayarları yapılandırın:**
    ```
-   Name: signai-server
-   Root Directory: signaling_server
-   Runtime: Node
-   Build Command: npm install
-   Start Command: node server.js
+   Ad: signai-server
+   Kök Dizin: signaling_server
+   Çalışma Zamanı: Node
+   Build Komutu: npm install
+   Başlatma Komutu: node server.js
    ```
 
-5. **Environment Variables:**
+5. **Ortam Değişkenleri:**
    ```
-   JWT_SECRET=your-super-secret-key-minimum-32-chars
+   JWT_SECRET=sizin-süper-gizli-anahtarınız-minimum-32-karakter
    NODE_ENV=production
    ```
 
-6. **Deploy** → Your server will be live at `https://your-app.onrender.com`
+6. **Dağıt** → Sunucunuz `https://uygulamanız.onrender.com` adresinde canlı olacak
 
-### APK Build Optimization
+### APK Derleme Optimizasyonu
 
-SignAI uses `--split-per-abi` flag for optimized APK sizes:
+SignAI optimize APK boyutları için `--split-per-abi` bayrağını kullanır:
 
-| Architecture | Device Type | APK Size |
-|--------------|-------------|----------|
-| **arm64-v8a** | Modern phones (2018+) | 54 MB |
-| **armeabi-v7a** | Older phones | 43 MB |
-| **x86_64** | Emulators, rare devices | 58 MB |
+| Mimari | Cihaz Tipi | APK Boyutu |
+|--------|------------|------------|
+| **arm64-v8a** | Modern telefonlar (2018+) | 54 MB |
+| **armeabi-v7a** | Eski telefonlar | 43 MB |
+| **x86_64** | Emülatörler, nadir cihazlar | 58 MB |
 
 ```bash
-# Build optimized APKs
+# Optimize edilmiş APK'ları derle
 flutter build apk --release --split-per-abi
 
-# Output location
+# Çıktı konumu
 build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
 ```
 
 ---
 
-## 📥 Installation
+## 📥 Kurulum
 
-### Prerequisites
+### Ön Gereksinimler
 
 - Flutter SDK ≥ 3.2.0
 - Node.js ≥ 18.0.0
-- Android Studio + Android device/emulator
-- (Optional) PostgreSQL ≥ 14 for persistent storage
+- Android Studio + Android cihaz/emülatör
+- (İsteğe bağlı) Kalıcı depolama için PostgreSQL ≥ 14
 
-### 1. Clone Repository
+### 1. Repository'yi Klonlayın
 
 ```bash
 git clone https://github.com/codewithme13/SignAi.git
 cd SignAi
 ```
 
-### 2. Backend Setup
+### 2. Backend Kurulumu
 
 ```bash
 cd signaling_server
 
-# Install dependencies
+# Bağımlılıkları yükleyin
 npm install
 
-# Option A: In-Memory Mode (No database needed)
-export JWT_SECRET="your-secret-key"
+# Seçenek A: Bellek İçi Mod (Veritabanı gerekmez)
+export JWT_SECRET="sizin-gizli-anahtarınız"
 npm start
 
-# Option B: PostgreSQL Mode (Persistent storage)
+# Seçenek B: PostgreSQL Modu (Kalıcı depolama)
 createdb signai_db
-export DATABASE_URL="postgresql://user:pass@localhost:5432/signai_db"
-export JWT_SECRET="your-secret-key"
+export DATABASE_URL="postgresql://kullanıcı:şifre@localhost:5432/signai_db"
+export JWT_SECRET="sizin-gizli-anahtarınız"
 npm start
 ```
 
-Server will start at `http://localhost:3001`
+Sunucu `http://localhost:3001` adresinde başlayacak
 
-### 3. Mobile App Setup
+### 3. Mobil Uygulama Kurulumu
 
 ```bash
 cd ../signai_app
 
-# Install Flutter dependencies
+# Flutter bağımlılıklarını yükleyin
 flutter pub get
 
-# Update server URL (for local development)
-# Edit lib/utils/constants.dart:
-# static const String signalingServerUrl = 'http://YOUR_IP:3001';
+# Sunucu URL'sini güncelleyin (yerel geliştirme için)
+# lib/utils/constants.dart dosyasını düzenleyin:
+# static const String signalingServerUrl = 'http://SİZİN_IP:3001';
 
-# For Android emulator, use ADB port forwarding:
+# Android emülatör için ADB port yönlendirme kullanın:
 adb reverse tcp:3001 tcp:3001
 
-# Run on connected device
+# Bağlı cihazda çalıştırın
 flutter run
 
-# Or build release APK
+# Veya release APK derleyin
 flutter build apk --release --split-per-abi
 ```
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Yapılandırma
 
-### Server Configuration
+### Sunucu Yapılandırması
 
-Environment variables for `signaling_server`:
+`signaling_server` için ortam değişkenleri:
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `JWT_SECRET` | Secret key for JWT signing (min 32 chars) | ✅ Yes | - |
-| `DATABASE_URL` | PostgreSQL connection string | ❌ No | In-Memory |
-| `PORT` | Server port | ❌ No | `3001` |
-| `NODE_ENV` | Environment mode | ❌ No | `development` |
+| Değişken | Açıklama | Gerekli | Varsayılan |
+|----------|----------|---------|------------|
+| `JWT_SECRET` | JWT imzalama için gizli anahtar (min 32 karakter) | ✅ Evet | - |
+| `DATABASE_URL` | PostgreSQL bağlantı dizesi | ❌ Hayır | Bellek İçi |
+| `PORT` | Sunucu portu | ❌ Hayır | `3001` |
+| `NODE_ENV` | Ortam modu | ❌ Hayır | `development` |
 
-**Hybrid Database Mode:**
-- If `DATABASE_URL` is set → Uses PostgreSQL (persistent)
-- If `DATABASE_URL` is NOT set → Uses In-Memory storage (resets on restart)
+**Hibrit Veritabanı Modu:**
+- `DATABASE_URL` ayarlanmışsa → PostgreSQL kullanır (kalıcı)
+- `DATABASE_URL` ayarlanmamışsa → Bellek İçi depolama kullanır (yeniden başlatmada sıfırlanır)
 
-### App Configuration
+### Uygulama Yapılandırması
 
-Edit `signai_app/lib/utils/constants.dart`:
+`signai_app/lib/utils/constants.dart` dosyasını düzenleyin:
 
 ```dart
 class AppConstants {
-  // Production server (Render.com deployment)
+  // Üretim sunucusu (Render.com dağıtımı)
   static const String signalingServerUrl = 'https://signai-5g3q.onrender.com';
   
-  // Local development alternatives:
+  // Yerel geliştirme alternatifleri:
   // static const String signalingServerUrl = 'http://localhost:3001';
-  // static const String signalingServerUrl = 'http://10.0.2.2:3001'; // Android emulator
+  // static const String signalingServerUrl = 'http://10.0.2.2:3001'; // Android emülatör
   
   static const int connectionTimeout = 30;
   static const int subtitleDisplayDuration = 3;
 }
 ```
 
-### Android Permissions
+### Android İzinleri
 
-Required permissions in `android/app/src/main/AndroidManifest.xml`:
+`android/app/src/main/AndroidManifest.xml` dosyasında gerekli izinler:
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
@@ -581,234 +580,233 @@ Required permissions in `android/app/src/main/AndroidManifest.xml`:
 
 ---
 
-## 💡 Usage
+## 💡 Kullanım
 
-### For End Users
+### Son Kullanıcılar İçin
 
-1. **Register/Login**
-   - Launch app → Enter username and password
-   - Tap "Kayıt Ol" (Register) or "Giriş Yap" (Login)
+1. **Kayıt Ol/Giriş Yap**
+   - Uygulamayı başlatın → Kullanıcı adı ve şifre girin
+   - "Kayıt Ol" veya "Giriş Yap" butonuna basın
 
-2. **Start a Call**
-   - On Home screen, enter target User ID or select from online users
-   - Tap "Görüntülü Arama Başlat" (Start Video Call)
-   - Grant camera/microphone permissions if prompted
+2. **Arama Başlat**
+   - Ana ekranda hedef Kullanıcı ID'sini girin veya çevrimiçi kullanıcılardan seçin
+   - "Görüntülü Arama Başlat" butonuna basın
+   - İstenirse kamera/mikrofon izinlerini verin
 
-3. **During Call**
-   - 🤟 Make sign language gestures → AI detects and shows purple subtitles
-   - 🎤 Speak → Speech-to-text converts and shows cyan subtitles
-   - Toggle camera/mic using bottom controls
-   - Tap red phone icon to end call
+3. **Arama Sırasında**
+   - 🤟 İşaret dili jestleri yapın → AI algılar ve mor altyazılar gösterir
+   - 🎤 Konuşun → Konuşmadan metne dönüştürür ve cyan altyazılar gösterir
+   - 🎬 Konuşmanızda anahtar kelimeler varsa → Karşı tarafta Lottie animasyonları oynar
+   - Alt kontrolleri kullanarak kamera/mikrofonu açıp kapatın
+   - Aramayı sonlandırmak için kırmızı telefon ikonuna basın
 
-4. **View Profile**
-   - Tap profile card → Upload photo, change theme, view settings
+4. **Profili Görüntüle**
+   - Profil kartına basın → Fotoğraf yükleyin, tema değiştirin, ayarları görüntüleyin
 
-### For Developers
+### Geliştiriciler İçin
 
-#### Testing with Android Emulator
+#### Android Emülatör ile Test
 
 ```bash
-# Start emulator
+# Emülatörü başlatın
 ~/Library/Android/sdk/emulator/emulator -avd Medium_Phone_API_36 &
 
-# Set up port forwarding
+# Port yönlendirmeyi ayarlayın
 adb reverse tcp:3001 tcp:3001
 
-# Install and run
+# Yükleyin ve çalıştırın
 flutter run
 ```
 
-#### Testing Sign Language Detection
+#### İşaret Dili Algılamayı Test Etme
 
-The AI recognizes gestures when:
-- Face is clearly visible in frame
-- Hands are raised above waist level
-- Gesture held for at least 5 frames (consistency buffer)
-- 2-second cooldown between same gestures
-
-<!-- BURAYA: Gesture detection demo GIF veya örnek ekran görüntüleri -->
+AI jestleri şu durumlarda tanır:
+- Yüz karede net olarak görünür
+- Eller bel seviyesinin üstünde kaldırılmış
+- Jest en az 5 kare boyunca tutulmuş (tutarlılık tamponu)
+- Aynı jest arasında 2 saniyelik bekleme
 
 ---
 
-## 📡 API Reference
+## 📡 API Referansı
 
-### REST Endpoints
+### REST Endpoint'leri
 
-#### Authentication
+#### Kimlik Doğrulama
 
 **POST** `/api/auth/register`
 ```json
-Request:
+İstek:
 {
-  "username": "john_doe",
-  "password": "secure123"
+  "username": "ahmet_yılmaz",
+  "password": "güvenli123"
 }
 
-Response (201):
+Yanıt (201):
 {
   "success": true,
   "data": {
     "userId": "550e8400-e29b-41d4-a716-446655440000",
-    "username": "john_doe",
+    "username": "ahmet_yılmaz",
     "token": "eyJhbGciOiJIUzI1NiIs..."
   }
 }
 ```
 
 **POST** `/api/auth/login`
-- Same request/response format as register
+- Kayıt ile aynı istek/yanıt formatı
 
-#### Users
+#### Kullanıcılar
 
-**GET** `/api/users` (Auth required)
-- Returns list of online users with profile photos
+**GET** `/api/users` (Kimlik doğrulama gerekli)
+- Profil fotoğraflarıyla çevrimiçi kullanıcıların listesini döner
 
-**GET** `/api/users/:userId` (Auth required)
-- Get specific user details
+**GET** `/api/users/:userId` (Kimlik doğrulama gerekli)
+- Belirli kullanıcı detaylarını alır
 
-#### Profile
+#### Profil
 
-**POST** `/api/profile/photo` (Auth required)
-- Upload profile photo (multipart/form-data, max 2MB)
-- Allowed formats: JPEG, PNG, GIF, WEBP
+**POST** `/api/profile/photo` (Kimlik doğrulama gerekli)
+- Profil fotoğrafı yükle (multipart/form-data, maks 2MB)
+- İzin verilen formatlar: JPEG, PNG, GIF, WEBP
 
-**DELETE** `/api/profile/photo` (Auth required)
-- Delete profile photo
+**DELETE** `/api/profile/photo` (Kimlik doğrulama gerekli)
+- Profil fotoğrafını sil
 
-#### Call History
+#### Arama Geçmişi
 
-**GET** `/api/calls/history` (Auth required)
-- Returns last 50 call records for authenticated user
+**GET** `/api/calls/history` (Kimlik doğrulama gerekli)
+- Kimliği doğrulanmış kullanıcı için son 50 arama kaydını döner
 
-### WebSocket Events
+### WebSocket Olayları
 
-#### Client → Server
+#### İstemci → Sunucu
 
-| Event | Data | Description |
-|-------|------|-------------|
-| `register` | `{ userId }` | Register user as online |
-| `call-user` | `{ targetUserId, offer, callerName }` | Initiate call |
-| `answer-call` | `{ targetUserId, answer }` | Accept call |
-| `reject-call` | `{ callerId }` | Reject call |
-| `ice-candidate` | `{ targetUserId, candidate }` | Share ICE candidate |
-| `end-call` | `{ targetUserId }` | End call |
-| `subtitle` | `{ targetUserId, text, type }` | Send subtitle |
+| Olay | Veri | Açıklama |
+|------|------|----------|
+| `register` | `{ userId }` | Kullanıcıyı çevrimiçi olarak kaydet |
+| `call-user` | `{ targetUserId, offer, callerName }` | Arama başlat |
+| `answer-call` | `{ targetUserId, answer }` | Aramayı kabul et |
+| `reject-call` | `{ callerId }` | Aramayı reddet |
+| `ice-candidate` | `{ targetUserId, candidate }` | ICE adayı paylaş |
+| `end-call` | `{ targetUserId }` | Aramayı sonlandır |
+| `subtitle` | `{ targetUserId, text, type }` | Altyazı gönder |
 
-#### Server → Client
+#### Sunucu → İstemci
 
-| Event | Data | Description |
-|-------|------|-------------|
-| `registered` | `{ userId, onlineUsers }` | Registration confirmed |
-| `incoming-call` | `{ callerId, callerName, callerPhoto, offer }` | Incoming call notification |
-| `call-answered` | `{ answer }` | Call accepted |
-| `call-rejected` | `{ reason }` | Call rejected |
-| `call-ended` | `{}` | Call terminated |
-| `ice-candidate` | `{ candidate }` | Remote ICE candidate |
-| `subtitle` | `{ text, type }` | Remote subtitle |
-| `user-online` | `{ userId, username, photoUrl }` | User came online |
-| `user-offline` | `{ userId }` | User went offline |
-
----
-
-## 🔒 Security
-
-### Communication Security
-
-| Layer | Method | Details |
-|-------|--------|---------|
-| **Video/Audio** | DTLS-SRTP | WebRTC's built-in end-to-end encryption |
-| **Signaling** | WSS/HTTPS | WebSocket Secure (TLS in production) |
-| **API** | JWT Bearer | Token-based authentication |
-| **Socket.IO** | JWT Auth | WebSocket connection authentication |
-| **Passwords** | bcrypt (12 rounds) | One-way hashing, brute-force resistant |
-
-### Server Security
-
-- **Rate Limiting:** 100 req/min (REST), 50 events/min (Socket)
-- **Helmet:** XSS, clickjacking, MIME sniffing protection
-- **CORS:** Configurable origin restriction
-- **Input Validation:** All inputs sanitized and validated
-- **File Upload:** 2MB limit, MIME type verification
-
-### Privacy
-
-- **P2P Connection:** Video/audio data does NOT pass through server
-- **Token Expiry:** 7 days (configurable)
-- **Password Requirements:** Minimum 6 characters
-- **No Data Logging:** Subtitle content not stored on server
+| Olay | Veri | Açıklama |
+|------|------|----------|
+| `registered` | `{ userId, onlineUsers }` | Kayıt onaylandı |
+| `incoming-call` | `{ callerId, callerName, callerPhoto, offer }` | Gelen arama bildirimi |
+| `call-answered` | `{ answer }` | Arama kabul edildi |
+| `call-rejected` | `{ reason }` | Arama reddedildi |
+| `call-ended` | `{}` | Arama sonlandırıldı |
+| `ice-candidate` | `{ candidate }` | Uzak ICE adayı |
+| `subtitle` | `{ text, type }` | Uzak altyazı |
+| `user-online` | `{ userId, username, photoUrl }` | Kullanıcı çevrimiçi oldu |
+| `user-offline` | `{ userId }` | Kullanıcı çevrimdışı oldu |
 
 ---
 
-## 🤝 Contributing
+## 🔒 Güvenlik
 
-We welcome contributions! Here's how you can help:
+### İletişim Güvenliği
 
-### Development Setup
+| Katman | Yöntem | Detaylar |
+|--------|--------|----------|
+| **Video/Ses** | DTLS-SRTP | WebRTC'nin yerleşik uçtan uca şifrelemesi |
+| **Sinyalleşme** | WSS/HTTPS | WebSocket Güvenli (üretimde TLS) |
+| **API** | JWT Bearer | Token tabanlı kimlik doğrulama |
+| **Socket.IO** | JWT Auth | WebSocket bağlantı kimlik doğrulaması |
+| **Şifreler** | bcrypt (12 tur) | Tek yönlü hashleme, kaba kuvvete dayanıklı |
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Test thoroughly (unit tests, integration tests)
-5. Commit: `git commit -m 'Add amazing feature'`
-6. Push: `git push origin feature/amazing-feature`
-7. Open a Pull Request
+### Sunucu Güvenliği
 
-### Code Style
+- **Hız Sınırlama:** 100 istek/dk (REST), 50 olay/dk (Socket)
+- **Helmet:** XSS, clickjacking, MIME sniffing koruması
+- **CORS:** Yapılandırılabilir kaynak kısıtlaması
+- **Girdi Doğrulama:** Tüm girdiler sanitize edilir ve doğrulanır
+- **Dosya Yükleme:** 2MB limit, MIME tipi doğrulama
 
-- **Flutter:** Follow [Effective Dart](https://dart.dev/guides/language/effective-dart) guidelines
-- **Node.js:** Use ESLint with provided config
-- **Commits:** Use [Conventional Commits](https://www.conventionalcommits.org/)
+### Gizlilik
 
-### Areas for Contribution
-
-- [ ] Expand gesture recognition vocabulary (add more sign language words)
-- [ ] Add more Lottie animations for speech-to-sign conversion
-- [ ] Support for additional sign languages (ASL, BSL, etc.)
-- [ ] iOS platform support with native optimizations
-- [ ] Group video calling (multi-party WebRTC)
-- [ ] Custom ML model training for improved accuracy
-- [ ] Offline gesture recognition mode
-- [ ] Real-time translation between different sign languages
-- [ ] Accessibility improvements (VoiceOver, TalkBack)
-- [ ] UI/UX enhancements and new themes
+- **P2P Bağlantı:** Video/ses verisi sunucudan GEÇMEZ
+- **Token Süresi:** 7 gün (yapılandırılabilir)
+- **Şifre Gereksinimleri:** Minimum 6 karakter
+- **Veri Kaydetmeme:** Altyazı içeriği sunucuda depolanmaz
 
 ---
 
-## 📄 License
+## 🤝 Katkıda Bulunma
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Katkıları memnuniyetle karşılıyoruz! Nasıl yardımcı olabilirsiniz:
+
+### Geliştirme Kurulumu
+
+1. Repository'yi fork'layın
+2. Özellik dalı oluşturun: `git checkout -b ozellik/harika-ozellik`
+3. Değişikliklerinizi yapın
+4. Kapsamlı test edin (birim testler, entegrasyon testleri)
+5. Commit yapın: `git commit -m 'Harika özellik ekle'`
+6. Push yapın: `git push origin ozellik/harika-ozellik`
+7. Pull Request açın
+
+### Kod Stili
+
+- **Flutter:** [Effective Dart](https://dart.dev/guides/language/effective-dart) kılavuzlarını takip edin
+- **Node.js:** Sağlanan yapılandırma ile ESLint kullanın
+- **Commit'ler:** [Conventional Commits](https://www.conventionalcommits.org/) kullanın
+
+### Katkı Alanları
+
+- [ ] Jest tanıma kelime dağarcığını genişlet (daha fazla işaret dili kelimesi ekle)
+- [ ] Konuşmadan işarete dönüşüm için daha fazla Lottie animasyonu ekle
+- [ ] Ek işaret dilleri için destek (ASL, BSL, vb.)
+- [ ] Yerel optimizasyonlarla iOS platform desteği
+- [ ] Grup görüntülü arama (çok taraflı WebRTC)
+- [ ] Geliştirilmiş doğruluk için özel ML model eğitimi
+- [ ] Çevrimdışı jest tanıma modu
+- [ ] Farklı işaret dilleri arasında gerçek zamanlı çeviri
+- [ ] Erişilebilirlik iyileştirmeleri (VoiceOver, TalkBack)
+- [ ] UI/UX geliştirmeleri ve yeni temalar
 
 ---
 
-## 📞 Contact
+## 📄 Lisans
 
-**Project Maintainer:** codewithme13
+Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+---
+
+## 📞 İletişim
+
+**Proje Sorumlusu:** codewithme13
 
 - GitHub: [@codewithme13](https://github.com/codewithme13)
-- Project Link: [https://github.com/codewithme13/SignAi](https://github.com/codewithme13/SignAi)
+- Proje Bağlantısı: [https://github.com/codewithme13/SignAi](https://github.com/codewithme13/SignAi)
 
 ---
 
-## 🙏 Acknowledgments
+## 🙏 Teşekkürler
 
-- **Google ML Kit** for advanced pose detection and skeletal tracking
-- **Lottie by Airbnb** for beautiful, performant vector animations
-- **WebRTC** community for peer-to-peer communication standards
-- **Flutter** team for the excellent cross-platform framework
-- **Render.com** for seamless cloud deployment
-- **Turkish Sign Language (TİD)** resources and experts
-- **OpenRelay** for free TURN server services
+- **Google ML Kit** gelişmiş poz algılama ve iskelet takibi yetenekleri için
+- **Airbnb Lottie** güzel, performanslı vektör animasyonları için
+- **WebRTC** topluluğu peer-to-peer iletişim standartları için
+- **Flutter** ekibi mükemmel çapraz platform framework'ü için
+- **Render.com** sorunsuz bulut dağıtımı için
+- **Türk İşaret Dili (TİD)** kaynakları ve uzmanları
+- **OpenRelay** ücretsiz TURN sunucu hizmetleri için
 
 ---
 
 <div align="center">
 
-### ⭐ Star this repo if you find it helpful!
+### ⭐ Faydalı bulduysanız yıldız verin!
 
-**SignAI** - True bidirectional communication between deaf and hearing individuals
+**SignAI** - İşitme engelli ve işiten bireyler arasında gerçek çift yönlü iletişim
 
-Made with ❤️ for accessibility and inclusion
+Erişilebilirlik ve kapsayıcılık için ❤️ ile yapıldı
 
-[Back to Top](#-signai)
+[Başa Dön](#-signai)
 
 </div>
