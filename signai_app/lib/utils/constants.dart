@@ -6,8 +6,8 @@ class AppConstants {
   static const String appVersion = '1.0.0';
 
   // Signaling Server URL'i
-  // Geliştirme: localhost:3001, Prodüksiyon: Railway/Render URL'i  
-  static const String signalingServerUrl = 'https://cute-garlics-tan.loca.lt';
+  // Render.com'da kalıcı olarak deploy edildi - 7/24 erişilebilir
+  static const String signalingServerUrl = 'https://signai-5g3q.onrender.com';
   // Yerel ağ: static const String signalingServerUrl = 'http://10.55.1.77:3001';
   // Emulator için: static const String signalingServerUrl = 'http://localhost:3001';
 
