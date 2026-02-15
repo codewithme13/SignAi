@@ -5,21 +5,23 @@
 /// ML Kit Pose Detection ile vücut noktalarını algılar.
 /// 10 temel Türk İşaret Dili hareketini tanır.
 ///
-/// ALGILANAN 10 HAREKET:
-/// ┌─────┬──────────────┬────────────────────────────────────────┐
-/// │  #  │   Hareket    │ Nasıl Yapılır                          │
-/// ├─────┼──────────────┼────────────────────────────────────────┤
-/// │  1  │ Merhaba      │ Sağ el baş üstünde, kol kalkık        │
-/// │  2  │ Teşekkürler  │ Sağ el çeneden aşağı doğru iner       │
-/// │  3  │ Evet         │ Baş + sağ yumruk aşağı iner           │
-/// │  4  │ Hayır        │ Sağ işaret parmağı sağa sola sallanır  │
-/// │  5  │ Yardım       │ İki el yukarı kalkık                  │
-/// │  6  │ Yemek        │ Sağ el ağza doğru gelir               │
-/// │  7  │ Su           │ Sağ el (C şekli) ağza doğru gelir     │
-/// │  8  │ Dur / Tamam  │ Sağ el avuç ileri, göğüs hizası       │
-/// │  9  │ Hoşçakal     │ Sağ el yüz hizasında, sağa sola       │
-/// │ 10  │ Ben / Kendim │ İşaret parmağı göğsü gösterir         │
-/// └─────┴──────────────┴────────────────────────────────────────┘
+/// ALGILANAN 12 HAREKET:
+/// ┌─────┬────────────────┬──────────────────────────────────────────┐
+/// │  #  │   Hareket      │ Nasıl Yapılır                            │
+/// ├─────┼────────────────┼──────────────────────────────────────────┤
+/// │  1  │ Merhaba        │ Sağ el baş üstünde                      │
+/// │  2  │ Teşekkürler    │ El çene civarı + aşağı hareket          │
+/// │  3  │ Evet           │ El baş hizası + hafif aşağı hareket     │
+/// │  4  │ Hayır          │ El yüz ortasında + sağa sola sallanma   │
+/// │  5  │ Yardım         │ İki el omuz üstünde                     │
+/// │  6  │ Yemek          │ El ağız hizasında + sabit               │
+/// │  7  │ Su             │ El çene altında + sabit                 │
+/// │  8  │ Dur            │ El göğüs hizası + kol açık              │
+/// │  9  │ Hoşçakal       │ El yüz yanında + sallanma               │
+/// │ 10  │ Ben            │ El göğüs hizası + vücuda yakın          │
+/// │ 11  │ Nasılsın       │ İki el göğüs hizası + açık (ayrık)      │
+/// │ 12  │ Seni Seviyorum │ İki el göğüs hizası + çapraz (yakın)    │
+/// └─────┴────────────────┴──────────────────────────────────────────┘
 /// ============================================
 
 import 'dart:async';
@@ -65,18 +67,18 @@ class SignLanguageService {
 
   // --- Algılama Buffer (Tutarlılık) ---
   final List<SignDetection> _frameBuffer = [];
-  static const int _bufferSize = 10;
-  static const int _minConsistentFrames = 5;
+  static const int _bufferSize = 8;
+  static const int _minConsistentFrames = 3;
 
   // --- Cümle Oluşturma ---
   final List<String> _sentenceWords = [];
   String? _lastConfirmedWord;
   DateTime _lastWordTime = DateTime.now();
-  static const Duration _wordCooldown = Duration(seconds: 2);
+  static const Duration _wordCooldown = Duration(milliseconds: 1500);
 
   // --- Throttle ---
   DateTime _lastProcessTime = DateTime.now();
-  static const Duration _processInterval = Duration(milliseconds: 180);
+  static const Duration _processInterval = Duration(milliseconds: 150);
 
   // --- Vücut Referansı ---
   double _shoulderWidth = 200.0; // Normalize referansı
@@ -102,7 +104,7 @@ class SignLanguageService {
         ),
       );
       _isInitialized = true;
-      debugPrint('🤖 İşaret Dili AI başlatıldı (10 hareket aktif)');
+      debugPrint('🤖 İşaret Dili AI başlatıldı (12 hareket aktif)');
     } catch (e) {
       debugPrint('❌ AI başlatma hatası: $e');
       _isInitialized = false;
@@ -239,16 +241,12 @@ class SignLanguageService {
   // ============ 10 HAREKET ALGILAMA ============
 
   SignDetection? _detect(Pose pose) {
-    // Gerekli landmark'ları çıkar
+    // Gerekli landmark'ları çıkar (sadece bilek/dirsek/omuz — güvenilir noktalar)
     final nose = pose.landmarks[PoseLandmarkType.nose];
     final rWrist = pose.landmarks[PoseLandmarkType.rightWrist];
     final lWrist = pose.landmarks[PoseLandmarkType.leftWrist];
-    final rElbow = pose.landmarks[PoseLandmarkType.rightElbow];
-    final lElbow = pose.landmarks[PoseLandmarkType.leftElbow];
     final rShoulder = pose.landmarks[PoseLandmarkType.rightShoulder];
     final lShoulder = pose.landmarks[PoseLandmarkType.leftShoulder];
-    final rIndex = pose.landmarks[PoseLandmarkType.rightIndex];
-    final rThumb = pose.landmarks[PoseLandmarkType.rightThumb];
 
     if (nose == null || rShoulder == null || lShoulder == null) return null;
 
@@ -257,161 +255,165 @@ class SignLanguageService {
     final midShoulderY = (rShoulder.y + lShoulder.y) / 2;
     final midShoulderX = (rShoulder.x + lShoulder.x) / 2;
 
-    // Her hareket için ayrı kontrol (öncelik sırasıyla)
+    // ═══════════════════════════════════════════════════
+    // GEVŞEK AMA AYIRT EDİCİ KURALLAR
+    // Her hareketin TEK belirleyici özelliği var:
+    //   Yardım       → İKİ el YUKARI (omuz üstü)
+    //   Nasılsın     → İKİ el GÖĞÜS hizası + AYRIK
+    //   Seni Seviyorum → İKİ el GÖĞÜS hizası + YAKIN
+    //   Merhaba  → TEK el baş üstünde
+    //   Hoşçakal → El yüz YANINDA + sallanma
+    //   Hayır    → El yüz ORTASINDA + sallanma
+    //   Teşekkür → El çene civarı + AŞAĞI hareket
+    //   Evet     → El baş hizası + küçük aşağı hareket
+    //   Yemek    → El AĞIZ seviyesinde
+    //   Su       → El çene ALTINDA + hareketsiz
+    //   Dur      → El göğüs hizası + kol AÇIK
+    //   Ben      → El göğüs hizası + vücuda YAKIN
+    // ═══════════════════════════════════════════════════
 
-    // ═══════════════════════════════════════════
-    // 1. YARDIM — İki kol birden yukarıda 🆘
-    // ═══════════════════════════════════════════
-    // En belirgin hareket, önce kontrol et
-    if (rWrist != null && lWrist != null && rElbow != null && lElbow != null) {
-      final bothWristsAboveNose = rWrist.y < n.y && lWrist.y < n.y;
-      final bothElbowsAboveShoulders = rElbow.y < rShoulder.y && lElbow.y < lShoulder.y;
-      final wristsApart = (rWrist.x - lWrist.x).abs() > sw * 0.4;
+    // ═══ İKİ-EL HAREKETLERİ (önce kontrol — karışma riski yok) ═══
 
-      if (bothWristsAboveNose && bothElbowsAboveShoulders && wristsApart) {
+    // ── 1. YARDIM — İki kol birden baş üstünde 🆘 ──
+    if (rWrist != null && lWrist != null) {
+      final bothAboveShoulders = rWrist.y < midShoulderY && lWrist.y < midShoulderY;
+      if (bothAboveShoulders) {
         return SignDetection(text: 'Yardım', confidence: 0.92, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 2. MERHABA — Sağ el baş üstünde, kol kalkık 👋
-    // ═══════════════════════════════════════════
-    if (rWrist != null && rElbow != null) {
-      final wristAboveHead = rWrist.y < n.y - sw * 0.3;
-      final elbowAboveShoulder = rElbow.y < rShoulder.y;
-      final elbowBentUp = rWrist.y < rElbow.y; // bilek dirsekten yukarıda
-      // Sol el yukarıda DEĞİL (Yardım'dan ayırmak için)
-      final leftDown = lWrist == null || lWrist.y > midShoulderY;
+    // ── 11. NASILSIN — İki el göğüs hizasında, birbirinden AYRIK 🤷 ──
+    // Yardım'dan fark: eller AŞAĞIDA (göğüs hizası), yukarıda değil
+    // Seni Seviyorum'dan fark: eller birbirinden UZAK
+    if (rWrist != null && lWrist != null) {
+      final bothAtChest = rWrist.y > midShoulderY && lWrist.y > midShoulderY &&
+                          rWrist.y < midShoulderY + sw * 0.9 && lWrist.y < midShoulderY + sw * 0.9;
+      final handsApart = (rWrist.x - lWrist.x).abs() > sw * 0.5;
 
-      if (wristAboveHead && elbowAboveShoulder && elbowBentUp && leftDown) {
-        // Yatay sallanma varsa ekstra güven
-        final swing = _rightHandHorizontalSwing();
-        final conf = swing > sw * 0.15 ? 0.93 : 0.85;
-        return SignDetection(text: 'Merhaba', confidence: conf, timestamp: DateTime.now());
+      if (bothAtChest && handsApart) {
+        return SignDetection(text: 'Nasılsın', confidence: 0.85, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 3. HOŞÇAKAL — Sağ el yüz hizasında, sağa sola sallanır 👋
-    // ═══════════════════════════════════════════
-    // Merhaba'dan farkı: el baş ÜSTÜNDE değil, yüz HİZASINDA
-    if (rWrist != null && rElbow != null) {
-      final atFaceLevel = (rWrist.y - n.y).abs() < sw * 0.35;
-      final toSideOfFace = (rWrist.x - n.x).abs() > sw * 0.3;
-      final swing = _rightHandHorizontalSwing();
-      final isSwinging = swing > sw * 0.2;
+    // ── 12. SENİ SEVİYORUM — İki el göğüs hizasında, birbirine YAKIN 💕 ──
+    // Nasılsın'dan fark: eller birbirine YAKIN (kucaklama/kalp gibi)
+    if (rWrist != null && lWrist != null) {
+      final bothAtChest = rWrist.y > midShoulderY && lWrist.y > midShoulderY &&
+                          rWrist.y < midShoulderY + sw * 0.9 && lWrist.y < midShoulderY + sw * 0.9;
+      final handsTogether = (rWrist.x - lWrist.x).abs() < sw * 0.5;
 
-      if (atFaceLevel && toSideOfFace && isSwinging) {
-        return SignDetection(text: 'Hoşçakal', confidence: 0.84, timestamp: DateTime.now());
+      if (bothAtChest && handsTogether) {
+        return SignDetection(text: 'Seni Seviyorum', confidence: 0.88, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 4. HAYIR — Sağ işaret parmağı sağa sola, baş hizası ☝️
-    // ═══════════════════════════════════════════
-    if (rWrist != null && rIndex != null) {
-      final indexAboveWrist = rIndex.y < rWrist.y; // parmak yukarı
-      final atHeadLevel = (rIndex.y - n.y).abs() < sw * 0.4;
+    // ═══ TEK-EL HAREKETLERİ ═══
+
+    // ── 2. MERHABA — Sağ el baş üstünde 👋 ──
+    // Yardım'dan fark: sadece TEK el yukarıda
+    if (rWrist != null) {
+      final wristAboveHead = rWrist.y < n.y - sw * 0.15;
+      final leftNotUp = lWrist == null || lWrist.y > midShoulderY + sw * 0.3;
+
+      if (wristAboveHead && leftNotUp) {
+        return SignDetection(text: 'Merhaba', confidence: 0.90, timestamp: DateTime.now());
+      }
+    }
+
+    // ── 3. HOŞÇAKAL — El yüz hizasında, yüzün YANINDA, sallanıyor 👋 ──
+    if (rWrist != null) {
+      final atFaceLevel = rWrist.y > n.y - sw * 0.4 && rWrist.y < n.y + sw * 0.5;
+      final toSide = (rWrist.x - n.x).abs() > sw * 0.25;
       final swing = _rightHandHorizontalSwing();
       final isSwinging = swing > sw * 0.15;
-      // Parmak açık mı? (index ile wrist arasında mesafe)
-      final fingerExtended = (rIndex.y - rWrist.y).abs() > sw * 0.15;
 
-      if (indexAboveWrist && atHeadLevel && isSwinging && fingerExtended) {
+      if (atFaceLevel && toSide && isSwinging) {
+        return SignDetection(text: 'Hoşçakal', confidence: 0.85, timestamp: DateTime.now());
+      }
+    }
+
+    // ── 4. HAYIR — El yüz hizasında, ORTADA, sallanıyor ☝️ ──
+    // Hoşçakal'dan fark: el yüzün yanında değil, ortasında
+    if (rWrist != null) {
+      final atFaceLevel = rWrist.y > n.y - sw * 0.4 && rWrist.y < n.y + sw * 0.5;
+      final centered = (rWrist.x - n.x).abs() < sw * 0.35;
+      final swing = _rightHandHorizontalSwing();
+      final isSwinging = swing > sw * 0.12;
+
+      if (atFaceLevel && centered && isSwinging) {
         return SignDetection(text: 'Hayır', confidence: 0.82, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 5. TEŞEKKÜRLER — Sağ el çeneden aşağı iner 🙏
-    // ═══════════════════════════════════════════
+    // ── 5. TEŞEKKÜRLER — El çene civarında + aşağı hareket 🙏 ──
     if (rWrist != null) {
-      final nearChin = rWrist.y > n.y && rWrist.y < n.y + sw * 0.6;
-      final centered = (rWrist.x - n.x).abs() < sw * 0.4;
-      final movingDown = _rightHandVerticalMotion() > sw * 0.1;
+      final nearChin = rWrist.y > n.y && rWrist.y < n.y + sw * 0.7;
+      final centered = (rWrist.x - n.x).abs() < sw * 0.5;
+      final movingDown = _rightHandVerticalMotion() > sw * 0.08;
 
       if (nearChin && centered && movingDown) {
         return SignDetection(text: 'Teşekkürler', confidence: 0.83, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 6. EVET — Baş hizasında yumruk, aşağı iner ✊
-    // ═══════════════════════════════════════════
-    if (rWrist != null && rIndex != null && rThumb != null) {
-      // Yumruk mu? (parmaklar bilege yakın)
-      final fistClosed = (rIndex.y - rWrist.y).abs() < sw * 0.12 &&
-                         (rThumb.y - rWrist.y).abs() < sw * 0.12;
-      final atHeadLevel = rWrist.y > n.y - sw * 0.2 && rWrist.y < n.y + sw * 0.5;
-      final centered = (rWrist.x - n.x).abs() < sw * 0.35;
-      final noddingDown = _rightHandVerticalMotion() > sw * 0.08;
+    // ── 6. EVET — El baş hizasında, hafif aşağı hareket ✊ ──
+    // Teşekkür'den fark: el daha YUKARI (burun civarı), hareket daha küçük
+    if (rWrist != null) {
+      final atHeadLevel = rWrist.y > n.y - sw * 0.25 && rWrist.y < n.y + sw * 0.35;
+      final centered = (rWrist.x - n.x).abs() < sw * 0.4;
+      final smallNod = _rightHandVerticalMotion() > sw * 0.05 && _rightHandVerticalMotion() < sw * 0.2;
 
-      if (fistClosed && atHeadLevel && centered && noddingDown) {
+      if (atHeadLevel && centered && smallNod) {
         return SignDetection(text: 'Evet', confidence: 0.80, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 7. YEMEK — Sağ el ağza gider gelir 🍽️
-    // ═══════════════════════════════════════════
+    // ── 7. YEMEK — El ağız hizasında, yüze yakın 🍽️ ──
     if (rWrist != null) {
-      // El ağız bölgesinde
-      final atMouth = rWrist.y > n.y - sw * 0.05 && rWrist.y < n.y + sw * 0.35;
-      final nearFace = (rWrist.x - n.x).abs() < sw * 0.3;
-      // Dirsek aşağıda (el yukarı kalkmış)
-      final elbowBelow = rElbow != null && rElbow.y > rWrist.y;
+      final atMouth = rWrist.y > n.y - sw * 0.1 && rWrist.y < n.y + sw * 0.45;
+      final nearFace = (rWrist.x - n.x).abs() < sw * 0.35;
+      final notSwinging = _rightHandHorizontalSwing() < sw * 0.15;
+      final notMovingDown = _rightHandVerticalMotion().abs() < sw * 0.08;
 
-      if (atMouth && nearFace && elbowBelow) {
+      if (atMouth && nearFace && notSwinging && notMovingDown) {
         return SignDetection(text: 'Yemek', confidence: 0.81, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 8. SU — Sağ el (C şekli) çeneye gelir 💧
-    // ═══════════════════════════════════════════
-    if (rWrist != null && rThumb != null && rIndex != null) {
-      final belowChin = rWrist.y > n.y + sw * 0.1 && rWrist.y < n.y + sw * 0.5;
-      final centered = (rWrist.x - n.x).abs() < sw * 0.3;
-      // C şekli: başparmak ile işaret parmağı arasında boşluk
-      final cShape = (rThumb.x - rIndex.x).abs() > sw * 0.05 &&
-                     (rThumb.x - rIndex.x).abs() < sw * 0.25;
-      final elbowBelow = rElbow != null && rElbow.y > rWrist.y;
+    // ── 8. SU — El çene altında, hareketsiz 💧 ──
+    // Yemek'ten fark: el daha AŞAĞIDA (çene altı)
+    if (rWrist != null) {
+      final belowChin = rWrist.y > n.y + sw * 0.2 && rWrist.y < n.y + sw * 0.7;
+      final centered = (rWrist.x - n.x).abs() < sw * 0.4;
+      final isStill = _rightHandHorizontalSwing() < sw * 0.1 &&
+                      _rightHandVerticalMotion().abs() < sw * 0.08;
 
-      if (belowChin && centered && cShape && elbowBelow) {
+      if (belowChin && centered && isStill) {
         return SignDetection(text: 'Su', confidence: 0.78, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 9. DUR / TAMAM — Avuç ileri, göğüs hizası ✋
-    // ═══════════════════════════════════════════
-    if (rWrist != null && rIndex != null && rThumb != null) {
-      final chestLevel = rWrist.y > midShoulderY && rWrist.y < midShoulderY + sw * 0.7;
-      // Avuç açık: parmaklar bilekten uzakta
-      final palmOpen = (rIndex.y - rWrist.y).abs() > sw * 0.15;
-      // El vücudun önünde (yana doğru değil)
-      final inFront = (rWrist.x - midShoulderX).abs() < sw * 0.5;
-      // Hareket yok (sabit duruyor)
-      final isStill = _rightHandHorizontalSwing() < sw * 0.1 &&
-                      _rightHandVerticalMotion().abs() < sw * 0.08;
+    // ── 9. DUR — El göğüs hizasında, kol ileri uzanmış ✋ ──
+    // Ben'den fark: el vücuttan UZAK (kol açık)
+    if (rWrist != null) {
+      final atChest = rWrist.y > midShoulderY && rWrist.y < midShoulderY + sw * 0.8;
+      final armExtended = (rWrist.x - midShoulderX).abs() > sw * 0.3;
+      final isStill = _rightHandHorizontalSwing() < sw * 0.12 &&
+                      _rightHandVerticalMotion().abs() < sw * 0.1;
 
-      if (chestLevel && palmOpen && inFront && isStill) {
+      if (atChest && armExtended && isStill) {
         return SignDetection(text: 'Dur', confidence: 0.77, timestamp: DateTime.now());
       }
     }
 
-    // ═══════════════════════════════════════════
-    // 10. BEN — İşaret parmağı göğsü gösterir 👆
-    // ═══════════════════════════════════════════
-    if (rWrist != null && rIndex != null) {
-      final chestLevel = rWrist.y > midShoulderY && rWrist.y < midShoulderY + sw * 0.6;
-      final centered = (rWrist.x - midShoulderX).abs() < sw * 0.25;
-      // İşaret parmağı aşağı (göğse doğru) bakıyor
-      final pointingDown = rIndex.y > rWrist.y;
-      // El vücuda yakın
+    // ── 10. BEN — El göğüs hizasında, vücuda yakın 👆 ──
+    if (rWrist != null) {
+      final atChest = rWrist.y > midShoulderY && rWrist.y < midShoulderY + sw * 0.7;
       final closeToBody = (rWrist.x - midShoulderX).abs() < sw * 0.3;
+      final isStill = _rightHandHorizontalSwing() < sw * 0.1 &&
+                      _rightHandVerticalMotion().abs() < sw * 0.08;
 
-      if (chestLevel && centered && pointingDown && closeToBody) {
+      if (atChest && closeToBody && isStill) {
         return SignDetection(text: 'Ben', confidence: 0.76, timestamp: DateTime.now());
       }
     }

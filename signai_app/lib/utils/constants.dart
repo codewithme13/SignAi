@@ -7,9 +7,9 @@ class AppConstants {
 
   // Signaling Server URL'i
   // Geliştirme: localhost:3001, Prodüksiyon: Railway/Render URL'i  
-  static const String signalingServerUrl = 'http://10.55.1.77:3001';
+  static const String signalingServerUrl = 'https://cute-garlics-tan.loca.lt';
+  // Yerel ağ: static const String signalingServerUrl = 'http://10.55.1.77:3001';
   // Emulator için: static const String signalingServerUrl = 'http://localhost:3001';
-  // static const String signalingServerUrl = 'https://signai-server.railway.app';
 
   // WebRTC STUN/TURN Sunucuları
   // STUN: NAT arkasındaki gerçek IP'yi bulmak için

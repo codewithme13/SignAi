@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <rect width="300" height="400" rx="20" fill="#1A1A2E"/>
+  <text x="150" y="35" text-anchor="middle" fill="#B8A9FF" font-family="Arial" font-size="22" font-weight="bold">TEŞEKKÜRLER</text>
+  <text x="150" y="55" text-anchor="middle" fill="#8888AA" font-family="Arial" font-size="12">El çene civarı + aşağı hareket</text>
+  <!-- Baş -->
+  <circle cx="150" cy="120" r="28" fill="none" stroke="#E0E0E0" stroke-width="3"/>
+  <circle cx="141" cy="114" r="3" fill="#E0E0E0"/>
+  <circle cx="159" cy="114" r="3" fill="#E0E0E0"/>
+  <path d="M142 128 Q150 135 158 128" fill="none" stroke="#E0E0E0" stroke-width="2"/>
+  <!-- Gövde -->
+  <line x1="150" y1="148" x2="150" y2="260" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Bacaklar -->
+  <line x1="150" y1="260" x2="120" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <line x1="150" y1="260" x2="180" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sol kol -->
+  <line x1="150" y1="175" x2="100" y2="230" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sağ kol (çene civarı) -->
+  <line x1="150" y1="175" x2="175" y2="155" stroke="#4ECDC4" stroke-width="4"/>
+  <line x1="175" y1="155" x2="165" y2="140" stroke="#4ECDC4" stroke-width="4"/>
+  <!-- Sağ el (çene hizası) -->
+  <circle cx="165" cy="137" r="12" fill="#4ECDC4" opacity="0.3"/>
+  <text x="165" y="142" text-anchor="middle" fill="#4ECDC4" font-size="16">🤚</text>
+  <!-- Aşağı hareket oku -->
+  <line x1="165" y1="155" x2="165" y2="185" stroke="#FFD93D" stroke-width="3"/>
+  <polygon points="158,182 165,195 172,182" fill="#FFD93D"/>
+  <!-- Hayalet el (aşağı inmiş hali) -->
+  <circle cx="165" cy="185" r="10" fill="#4ECDC4" opacity="0.1" stroke="#4ECDC4" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="150" y="375" text-anchor="middle" fill="#FFD93D" font-family="Arial" font-size="13">🙏 El çeneden aşağı doğru iner</text>
+</svg>

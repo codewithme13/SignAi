@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <rect width="300" height="400" rx="20" fill="#1A1A2E"/>
+  <text x="150" y="35" text-anchor="middle" fill="#B8A9FF" font-family="Arial" font-size="22" font-weight="bold">NASILSIN</text>
+  <text x="150" y="55" text-anchor="middle" fill="#8888AA" font-family="Arial" font-size="12">İki el göğüs hizasında + ayrık</text>
+  <!-- Baş -->
+  <circle cx="150" cy="120" r="28" fill="none" stroke="#E0E0E0" stroke-width="3"/>
+  <circle cx="141" cy="114" r="3" fill="#E0E0E0"/>
+  <circle cx="159" cy="114" r="3" fill="#E0E0E0"/>
+  <path d="M142 128 Q150 135 158 128" fill="none" stroke="#E0E0E0" stroke-width="2"/>
+  <!-- Gövde -->
+  <line x1="150" y1="148" x2="150" y2="260" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Bacaklar -->
+  <line x1="150" y1="260" x2="120" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <line x1="150" y1="260" x2="180" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sol kol (göğüs hizası, AYRIK) -->
+  <line x1="150" y1="185" x2="100" y2="190" stroke="#4ECDC4" stroke-width="4"/>
+  <line x1="100" y1="190" x2="75" y2="195" stroke="#4ECDC4" stroke-width="4"/>
+  <!-- Sol el -->
+  <circle cx="72" cy="195" r="13" fill="#4ECDC4" opacity="0.3"/>
+  <text x="72" y="200" text-anchor="middle" fill="#4ECDC4" font-size="16">🤚</text>
+  <!-- Sağ kol (göğüs hizası, AYRIK) -->
+  <line x1="150" y1="185" x2="200" y2="190" stroke="#4ECDC4" stroke-width="4"/>
+  <line x1="200" y1="190" x2="225" y2="195" stroke="#4ECDC4" stroke-width="4"/>
+  <!-- Sağ el -->
+  <circle cx="228" cy="195" r="13" fill="#4ECDC4" opacity="0.3"/>
+  <text x="228" y="200" text-anchor="middle" fill="#4ECDC4" font-size="16">🤚</text>
+  <!-- Ayrık mesafe oku -->
+  <line x1="90" y1="220" x2="210" y2="220" stroke="#FFD93D" stroke-width="2"/>
+  <line x1="90" y1="215" x2="90" y2="225" stroke="#FFD93D" stroke-width="2"/>
+  <line x1="210" y1="215" x2="210" y2="225" stroke="#FFD93D" stroke-width="2"/>
+  <text x="150" y="238" text-anchor="middle" fill="#FFD93D" font-family="Arial" font-size="11">AYRIK (birbirinden uzak)</text>
+  <text x="150" y="375" text-anchor="middle" fill="#FFD93D" font-family="Arial" font-size="13">🤷 İki el göğüste açık (avuçlar dışa)</text>
+</svg>

@@ -45,10 +45,12 @@ class SignalingService {
   Function(dynamic)? onCallEnded;
   Function(dynamic)? onIceCandidate;
   Function(String, String)? onSubtitle; // text, fromUserId
+  Function(String, String, String)? onTypedSubtitle; // text, type, fromUserId
   Function(Map<String, dynamic>)? onUserOnline;
   Function(Map<String, dynamic>)? onUserOffline;
   Function(List<Map<String, dynamic>>)? onOnlineUsers;
   Function(SignalingState)? onStateChanged;
+  Function(String)? onCallError;
   Function()? _onReconnectCallback;
 
   SignalingState get state => _state;
@@ -160,7 +162,11 @@ class SignalingService {
 
     // Altyazı
     socket.on('subtitle', (data) {
-      onSubtitle?.call(data['text'], data['from']);
+      final text = data['text'] ?? '';
+      final from = data['from'] ?? '';
+      final type = data['type'] ?? 'speech';
+      onTypedSubtitle?.call(text, type, from);
+      onSubtitle?.call(text, from);
     });
 
     // Kullanıcı online/offline
@@ -183,6 +189,7 @@ class SignalingService {
     // Hata
     socket.on('call-error', (data) {
       debugPrint('⚠️ Arama hatası: ${data['message']}');
+      onCallError?.call(data['message'] ?? 'Bilinmeyen hata');
     });
   }
 
@@ -244,11 +251,12 @@ class SignalingService {
   }
 
   /// Altyazı gönder
-  void sendSubtitle(String targetUserId, String text, {String language = 'tr'}) {
+  void sendSubtitle(String targetUserId, String text, {String language = 'tr', String type = 'speech'}) {
     _socket?.emit('subtitle', {
       'targetUserId': targetUserId,
       'text': text,
       'language': language,
+      'type': type,
     });
   }
 

@@ -522,7 +522,7 @@ io.on('connection', (socket) => {
   // ---- 7. ALT YAZI ----
   socket.on('subtitle', (data) => {
     if (!checkSocketRateLimit(socket.id)) return;
-    const { targetUserId, text, language } = data || {};
+    const { targetUserId, text, language, type } = data || {};
     if (!isValidUUID(targetUserId)) return;
     if (typeof text !== 'string' || text.length > 500) return;
 
@@ -531,6 +531,7 @@ io.on('connection', (socket) => {
       io.to(targetSocketId).emit('subtitle', {
         text: text.substring(0, 500),
         language: language || 'tr',
+        type: type || 'speech',
         from: socketToUser.get(socket.id)?.userId,
         timestamp: Date.now(),
       });

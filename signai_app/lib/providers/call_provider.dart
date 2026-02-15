@@ -147,10 +147,17 @@ class CallProvider with ChangeNotifier {
       await webrtc.addIceCandidate(candidate);
     };
 
-    signaling.onSubtitle = (text, fromUserId) {
-      _speechSubtitle = text;
+    signaling.onTypedSubtitle = (text, type, fromUserId) {
+      if (type == 'sign') {
+        _signSubtitle = text;
+      } else {
+        _speechSubtitle = text;
+      }
       notifyListeners();
     };
+
+    // Eski callback'i de tutuyoruz (uyumluluk için)
+    signaling.onSubtitle = null;
 
     signaling.onUserOnline = (user) {
       if (!_onlineUsers.any((u) => u['userId'] == user['userId'])) {
@@ -167,6 +174,17 @@ class CallProvider with ChangeNotifier {
     signaling.onOnlineUsers = (users) {
       _onlineUsers.clear();
       _onlineUsers.addAll(users);
+      notifyListeners();
+    };
+
+    // Arama hatası (kullanıcı çevrimdışı, geçersiz ID vs.)
+    signaling.onCallError = (message) {
+      debugPrint('⚠️ Arama hatası: $message');
+      _lastError = message;
+      // Arama durumunu temizle
+      _currentCallUserId = null;
+      _currentCallUserName = null;
+      webrtc.hangUp();
       notifyListeners();
     };
 
@@ -202,7 +220,7 @@ class CallProvider with ChangeNotifier {
     signLanguage.onSentenceFormed = (sentence) {
       _signSubtitle = sentence;
       if (_currentCallUserId != null) {
-        signaling.sendSubtitle(_currentCallUserId!, sentence);
+        signaling.sendSubtitle(_currentCallUserId!, sentence, type: 'sign');
       }
       notifyListeners();
     };

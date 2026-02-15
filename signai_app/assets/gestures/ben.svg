@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <rect width="300" height="400" rx="20" fill="#1A1A2E"/>
+  <text x="150" y="35" text-anchor="middle" fill="#B8A9FF" font-family="Arial" font-size="22" font-weight="bold">BEN</text>
+  <text x="150" y="55" text-anchor="middle" fill="#8888AA" font-family="Arial" font-size="12">El göğüs hizası + vücuda yakın</text>
+  <!-- Baş -->
+  <circle cx="150" cy="120" r="28" fill="none" stroke="#E0E0E0" stroke-width="3"/>
+  <circle cx="141" cy="114" r="3" fill="#E0E0E0"/>
+  <circle cx="159" cy="114" r="3" fill="#E0E0E0"/>
+  <path d="M142 128 Q150 135 158 128" fill="none" stroke="#E0E0E0" stroke-width="2"/>
+  <!-- Gövde -->
+  <line x1="150" y1="148" x2="150" y2="260" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Göğüs bölgesi -->
+  <circle cx="150" cy="200" r="20" fill="none" stroke="#FFD93D" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <!-- Bacaklar -->
+  <line x1="150" y1="260" x2="120" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <line x1="150" y1="260" x2="180" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sol kol -->
+  <line x1="150" y1="185" x2="100" y2="230" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sağ kol (vücuda yakın) -->
+  <line x1="150" y1="185" x2="165" y2="190" stroke="#4ECDC4" stroke-width="4"/>
+  <line x1="165" y1="190" x2="160" y2="200" stroke="#4ECDC4" stroke-width="4"/>
+  <!-- Sağ el (göğse dokunuyor) -->
+  <circle cx="158" cy="200" r="11" fill="#4ECDC4" opacity="0.3"/>
+  <text x="158" y="205" text-anchor="middle" fill="#4ECDC4" font-size="16">👆</text>
+  <!-- Yakınlık işareti -->
+  <text x="195" y="195" fill="#FFD93D" font-family="Arial" font-size="10">vücuda</text>
+  <text x="195" y="207" fill="#FFD93D" font-family="Arial" font-size="10">yakın</text>
+  <text x="150" y="375" text-anchor="middle" fill="#FFD93D" font-family="Arial" font-size="13">👆 El göğse yakın, kendini gösterir</text>
+</svg>

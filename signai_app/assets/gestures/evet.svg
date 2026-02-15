@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400">
+  <rect width="300" height="400" rx="20" fill="#1A1A2E"/>
+  <text x="150" y="35" text-anchor="middle" fill="#B8A9FF" font-family="Arial" font-size="22" font-weight="bold">EVET</text>
+  <text x="150" y="55" text-anchor="middle" fill="#8888AA" font-family="Arial" font-size="12">El baş hizası + hafif aşağı hareket</text>
+  <!-- Baş -->
+  <circle cx="150" cy="120" r="28" fill="none" stroke="#E0E0E0" stroke-width="3"/>
+  <circle cx="141" cy="114" r="3" fill="#E0E0E0"/>
+  <circle cx="159" cy="114" r="3" fill="#E0E0E0"/>
+  <path d="M142 128 Q150 135 158 128" fill="none" stroke="#E0E0E0" stroke-width="2"/>
+  <!-- Gövde -->
+  <line x1="150" y1="148" x2="150" y2="260" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Bacaklar -->
+  <line x1="150" y1="260" x2="120" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <line x1="150" y1="260" x2="180" y2="340" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sol kol -->
+  <line x1="150" y1="175" x2="100" y2="230" stroke="#E0E0E0" stroke-width="3"/>
+  <!-- Sağ kol (baş hizası) -->
+  <line x1="150" y1="175" x2="180" y2="150" stroke="#4ECDC4" stroke-width="4"/>
+  <line x1="180" y1="150" x2="175" y2="115" stroke="#4ECDC4" stroke-width="4"/>
+  <!-- Sağ el (yumruk - baş hizası) -->
+  <circle cx="175" cy="112" r="11" fill="#4ECDC4" opacity="0.3"/>
+  <text x="175" y="117" text-anchor="middle" fill="#4ECDC4" font-size="16">✊</text>
+  <!-- Küçük aşağı hareket oku -->
+  <line x1="175" y1="128" x2="175" y2="148" stroke="#FFD93D" stroke-width="2.5"/>
+  <polygon points="169,145 175,155 181,145" fill="#FFD93D"/>
+  <!-- Küçük hareket işareti -->
+  <text x="195" y="142" fill="#FFD93D" font-family="Arial" font-size="10">küçük</text>
+  <text x="195" y="154" fill="#FFD93D" font-family="Arial" font-size="10">hareket</text>
+  <text x="150" y="375" text-anchor="middle" fill="#FFD93D" font-family="Arial" font-size="13">✊ Baş hizasında hafif aşağı iner</text>
+</svg>

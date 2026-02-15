@@ -16,6 +16,7 @@ import '../utils/theme.dart';
 import '../widgets/subtitle_overlay.dart';
 import '../widgets/call_controls.dart';
 import '../widgets/call_timer.dart';
+import '../widgets/sign_animation_overlay.dart';
 
 class CallScreen extends StatefulWidget {
   const CallScreen({super.key});
@@ -139,6 +140,13 @@ class _CallScreenState extends State<CallScreen> {
                 signSubtitle: callProvider.signSubtitle,
                 speechSubtitle: callProvider.speechSubtitle,
               ),
+            ),
+
+            // === İŞARET DİLİ ANİMASYONU ===
+            // Karşıdaki kişi konuştuğunda, işaret dili animasyonu göster
+            SignAnimationOverlay(
+              text: callProvider.speechSubtitle,
+              size: 120,
             ),
 
             // === ÜST BAR ===
@@ -498,7 +506,13 @@ class _CallScreenState extends State<CallScreen> {
 
   /// Aramayı bitir
   Future<void> _hangUp(CallProvider callProvider) async {
+    // endCall() içinde webrtc.hangUp() çağrılır → state ended olur
+    // → _onCallStateChanged listener zaten Navigator.pop() yapar
+    // Bu yüzden burada tekrar pop yapmıyoruz (double-pop → siyah ekran)
     await callProvider.endCall();
-    if (mounted) Navigator.pop(context);
+    // Listener tetiklenmezse (edge case) güvenlik için pop yap
+    if (mounted && callProvider.webrtc.callState != CallState.ended) {
+      Navigator.of(context).pop();
+    }
   }
 }
